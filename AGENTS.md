@@ -6,5 +6,4 @@ description instead of silently changing the architecture.
 
 ## Project overview
 
-- Frontend: React
-- Backend: Netlify Functions (serverless), in `netlify/functions/`.
+Vanilla HTML and Javascript using browser storage to simulate the database.
