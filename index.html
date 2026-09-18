@@ -15,6 +15,7 @@
     <nav class="nav-links">
       <a href="#hero">Home</a>
       <a href="#features">Features</a>
+      <a href="#checkin">Remote Check-In</a>
       <a href="#interactive">Try It</a>
       <a href="#guestbook">Guestbook</a>
     </nav>
@@ -62,6 +63,67 @@
           <div class="feature-icon">📱</div>
           <h3>Fully Responsive</h3>
           <p>Designed mobile-first with adaptive layouts that look great on screen size of any device.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="checkin" class="checkin-section">
+      <h2 class="section-title">Remote Patient Check-In</h2>
+      <p class="section-subtitle">Check in remotely from anywhere and hold your place in line before you arrive.</p>
+
+      <div id="checkin-form-container" class="card checkin-card">
+        <form id="checkin-form">
+          <div class="form-row">
+            <label for="patient-name">Full Name</label>
+            <input type="text" id="patient-name" placeholder="e.g. Jane Doe" required maxlength="40">
+          </div>
+          <div class="form-row">
+            <label for="patient-phone">Phone Number</label>
+            <input type="tel" id="patient-phone" placeholder="e.g. (555) 123-4567" required maxlength="20">
+          </div>
+          <div class="form-row">
+            <label for="visit-reason">Reason for Visit</label>
+            <select id="visit-reason" required>
+              <option value="">Select a reason...</option>
+              <option value="General Consultation">General Consultation</option>
+              <option value="Urgent Care">Urgent Care / Acute Illness</option>
+              <option value="Routine Checkup">Routine Checkup</option>
+              <option value="Follow-up Visit">Follow-up Visit</option>
+              <option value="Vaccination / Lab Work">Vaccination / Lab Work</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Check In & Hold My Place</button>
+        </form>
+      </div>
+
+      <div id="active-ticket-card" class="card active-ticket-card hidden">
+        <div class="ticket-header">
+          <span class="ticket-badge">Active Queue Ticket</span>
+          <span class="ticket-id" id="ticket-id-display">#T-000</span>
+        </div>
+        <div class="ticket-body">
+          <div class="ticket-stat">
+            <span class="stat-label">Position in Line</span>
+            <span class="stat-value" id="ticket-position-display">1</span>
+          </div>
+          <div class="ticket-stat">
+            <span class="stat-label">Estimated Wait Time</span>
+            <span class="stat-value" id="ticket-wait-display">~0 mins</span>
+          </div>
+        </div>
+        <div class="ticket-info">
+          <p><strong>Patient:</strong> <span id="ticket-patient-display"></span></p>
+
+          <p><strong>Reason:</strong> <span id="ticket-reason-display"></span></p>
+          <p><strong>Checked in at:</strong> <span id="ticket-time-display"></span></p>
+        </div>
+        <button id="cancel-checkin-btn" class="btn btn-danger">Cancel Check-In</button>
+      </div>
+
+      <div class="messages-container queue-container">
+        <h3>Live Clinic Queue</h3>
+        <div id="queue-list" class="queue-list">
+          <p class="empty-msg">No patients currently in line.</p>
         </div>
       </div>
     </section>

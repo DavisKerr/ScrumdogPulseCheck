@@ -17,13 +17,16 @@ const yearSpan = document.getElementById('year');
 const STORAGE_KEYS = {
   THEME: 'helloworld_theme',
   CUSTOM_GREETING: 'helloworld_greeting',
-  MESSAGES: 'helloworld_guestbook_messages'
+  MESSAGES: 'helloworld_guestbook_messages',
+  CHECKIN_QUEUE: 'helloworld_checkin_queue',
+  MY_TICKET_ID: 'helloworld_my_ticket_id'
 };
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initGreeting();
+  initCheckin();
   initGuestbook();
   initFooterYear();
 });
@@ -156,6 +159,131 @@ function escapeHTML(str) {
       '"': '&quot;'
     }[tag] || tag)
   );
+}
+
+/* Remote Patient Check-In Handling */
+function initCheckin() {
+  const checkinFormContainer = document.getElementById('checkin-form-container');
+  const checkinForm = document.getElementById('checkin-form');
+  const activeTicketCard = document.getElementById('active-ticket-card');
+  const cancelCheckinBtn = document.getElementById('cancel-checkin-btn');
+
+  renderCheckinUI();
+
+  if (checkinForm) {
+    checkinForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('patient-name');
+      const phoneInput = document.getElementById('patient-phone');
+      const reasonSelect = document.getElementById('visit-reason');
+
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const reason = reasonSelect.value;
+
+      if (!name || !phone || !reason) return;
+
+      const queue = getStoredQueue();
+      const ticketNum = Math.floor(100 + Math.random() * 900);
+      const ticketId = `T-${ticketNum}`;
+
+      const newTicket = {
+        id: Date.now().toString(),
+        ticketId,
+        name,
+        phone,
+        reason,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      queue.push(newTicket);
+      localStorage.setItem(STORAGE_KEYS.CHECKIN_QUEUE, JSON.stringify(queue));
+      localStorage.setItem(STORAGE_KEYS.MY_TICKET_ID, newTicket.id);
+
+      checkinForm.reset();
+      renderCheckinUI();
+    });
+  }
+
+  if (cancelCheckinBtn) {
+    cancelCheckinBtn.addEventListener('click', () => {
+      const myTicketId = localStorage.getItem(STORAGE_KEYS.MY_TICKET_ID);
+      if (!myTicketId) return;
+
+      let queue = getStoredQueue();
+      queue = queue.filter(item => item.id !== myTicketId);
+
+      localStorage.setItem(STORAGE_KEYS.CHECKIN_QUEUE, JSON.stringify(queue));
+      localStorage.removeItem(STORAGE_KEYS.MY_TICKET_ID);
+
+      renderCheckinUI();
+    });
+  }
+}
+
+function getStoredQueue() {
+  const stored = localStorage.getItem(STORAGE_KEYS.CHECKIN_QUEUE);
+  if (!stored) return [];
+  try {
+    return JSON.parse(stored);
+  } catch (e) {
+    console.error('Error reading checkin queue from storage:', e);
+    return [];
+  }
+}
+
+function renderCheckinUI() {
+  const checkinFormContainer = document.getElementById('checkin-form-container');
+  const activeTicketCard = document.getElementById('active-ticket-card');
+  const queueList = document.getElementById('queue-list');
+
+  const myTicketId = localStorage.getItem(STORAGE_KEYS.MY_TICKET_ID);
+  const queue = getStoredQueue();
+
+  const myIndex = queue.findIndex(item => item.id === myTicketId);
+
+  if (myIndex !== -1) {
+    const myTicket = queue[myIndex];
+    const position = myIndex + 1;
+    const waitTimeMinutes = (position - 1) * 15;
+
+    document.getElementById('ticket-id-display').textContent = `#${myTicket.ticketId}`;
+    document.getElementById('ticket-position-display').textContent = `#${position}`;
+    document.getElementById('ticket-wait-display').textContent = position === 1 ? 'Next in line' : `~${waitTimeMinutes} mins`;
+    document.getElementById('ticket-patient-display').textContent = myTicket.name;
+    document.getElementById('ticket-reason-display').textContent = myTicket.reason;
+    document.getElementById('ticket-time-display').textContent = myTicket.timestamp;
+
+    checkinFormContainer.classList.add('hidden');
+    activeTicketCard.classList.remove('hidden');
+  } else {
+    // If ticket was removed or user doesn't have active ticket
+    localStorage.removeItem(STORAGE_KEYS.MY_TICKET_ID);
+    checkinFormContainer.classList.remove('hidden');
+    activeTicketCard.classList.add('hidden');
+  }
+
+  // Render Queue List
+  if (!queueList) return;
+
+  if (queue.length === 0) {
+    queueList.innerHTML = `<p class="empty-msg">No patients currently in line.</p>`;
+    return;
+  }
+
+  queueList.innerHTML = queue.map((item, index) => {
+    const isMe = item.id === myTicketId;
+    return `
+      <div class="queue-item ${isMe ? 'active-user-item' : ''}">
+        <div class="queue-patient-info">
+          <span class="queue-patient-name">${escapeHTML(item.name)} ${isMe ? '(You)' : ''}</span>
+          <span class="queue-patient-reason">${escapeHTML(item.reason)} — Checked in ${escapeHTML(item.timestamp)}</span>
+        </div>
+        <div class="queue-position-badge">#${index + 1} in line</div>
+      </div>
+    `;
+  }).join('');
 }
 
 /* Footer Year */
