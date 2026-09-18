@@ -284,12 +284,133 @@ main {
 }
 
 /* Interactive & Forms */
-.interactive-card, .guestbook-form {
+.interactive-card, .guestbook-form, .checkin-card, .active-ticket-card {
   max-width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+}
+
+/* Check-In Section Specifics */
+.active-ticket-card {
+  border-left: 4px solid var(--accent-color);
+  background: var(--card-bg);
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-badge {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ticket-id {
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-color);
+}
+
+.ticket-body {
+  display: flex;
+  justify-content: space-around;
+  background: var(--input-bg);
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  text-align: center;
+}
+
+.ticket-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--accent-color);
+}
+
+.ticket-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.ticket-info p {
+  color: var(--text-secondary);
+}
+
+.ticket-info strong {
+  color: var(--text-primary);
+}
+
+.queue-container {
+  margin-top: 3rem;
+}
+
+.queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.queue-item {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.queue-item.active-user-item {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+.queue-patient-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.queue-patient-name {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.queue-patient-reason {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.queue-position-badge {
+  background-color: var(--input-bg);
+  border: 1px solid var(--card-border);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--accent-color);
 }
 
 .input-group, .form-row {
