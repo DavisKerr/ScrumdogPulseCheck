@@ -54,7 +54,7 @@ function initGreeting() {
       const { text, target } = JSON.parse(savedGreeting);
       if (text) greetingSelect.value = text;
       if (target) nameInput.value = target;
-      updateGreetingDisplay(text || 'Hello', target || 'World!');
+      updateGreetingDisplay(text || 'Hello', target || 'Scrumdog Team!');
     } catch (e) {
       console.error('Error parsing stored greeting:', e);
     }
@@ -62,7 +62,7 @@ function initGreeting() {
 
   applyBtn.addEventListener('click', () => {
     const greetingText = greetingSelect.value || 'Hello';
-    const targetText = nameInput.value.trim() || 'World!';
+    const targetText = nameInput.value.trim() || 'Scrumdog Team!';
 
     updateGreetingDisplay(greetingText, targetText);
 
