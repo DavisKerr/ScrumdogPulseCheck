@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World - Modern Landing Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <span class="logo-icon">&lt;/&gt;</span>
+      <span class="logo-text">HelloWorld.io</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#features">Features</a>
+      <a href="#interactive">Try It</a>
+      <a href="#guestbook">Guestbook</a>
+    </nav>
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+      <span id="theme-icon">🌙</span>
+    </button>
+  </header>
+
+  <main>
+    <section id="hero" class="hero-section">
+      <div class="hero-badge">✨ Welcome to the Digital Frontier</div>
+      <h1 class="hero-title">
+        Hello, <span class="gradient-text" id="dynamic-greeting">World!</span>
+      </h1>
+      <p class="hero-subtitle">
+        A modern, responsive, and lightweight landing page built with vanilla HTML, CSS, and JavaScript. Powered by browser storage.
+      </p>
+      <div class="hero-actions">
+        <a href="#interactive" class="btn btn-primary">Get Started</a>
+        <a href="#features" class="btn btn-secondary">Learn More</a>
+      </div>
+    </section>
+
+    <section id="features" class="features-section">
+      <h2 class="section-title">Features</h2>
+      <p class="section-subtitle">Everything you need to kickstart your web development journey.</p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Zero framework overhead. Pure vanilla Web technologies for maximum loading performance.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Theme Able</h3>
+          <p>Seamless toggle between dark and light modes with custom CSS properties and persistent preference.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💾</div>
+          <h3>Browser Storage</h3>
+          <p>Simulated local persistence using <code>localStorage</code> to store user settings and guestbook messages.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Fully Responsive</h3>
+          <p>Designed mobile-first with adaptive layouts that look great on screen size of any device.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="interactive" class="interactive-section">
+      <h2 class="section-title">Customize Greeting</h2>
+      <p class="section-subtitle">Personalize your Hello World experience right in your browser.</p>
+
+      <div class="card interactive-card">
+        <div class="input-group">
+          <label for="name-input">Your Name or Message:</label>
+          <input type="text" id="name-input" placeholder="e.g. Developer, Universe, Friend..." maxlength="30">
+        </div>
+        <div class="input-group">
+          <label for="greeting-select">Select Greeting Language:</label>
+          <select id="greeting-select">
+            <option value="Hello">English (Hello)</option>
+            <option value="Hola">Spanish (Hola)</option>
+            <option value="Bonjour">French (Bonjour)</option>
+            <option value="Hallo">German (Hallo)</option>
+            <option value="Ciao">Italian (Ciao)</option>
+            <option value="Konnichiwa">Japanese (Konnichiwa)</option>
+            <option value="Namaste">Hindi (Namaste)</option>
+          </select>
+        </div>
+        <button id="apply-btn" class="btn btn-primary">Apply Custom Greeting</button>
+      </div>
+    </section>
+
+    <section id="guestbook" class="guestbook-section">
+      <h2 class="section-title">Visitor Guestbook</h2>
+      <p class="section-subtitle">Leave a greeting or feedback below. Messages are saved in your browser storage.</p>
+
+      <form id="guestbook-form" class="guestbook-form card">
+        <div class="form-row">
+          <input type="text" id="guest-name" placeholder="Your Name" required maxlength="30">
+        </div>
+        <div class="form-row">
+          <textarea id="guest-message" placeholder="Leave your message here..." required maxlength="200" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Guestbook</button>
+      </form>
+
+      <div class="messages-container">
+        <h3>Recent Greetings</h3>
+        <div id="guestbook-list" class="guestbook-list">
+          <p class="empty-msg">No messages yet. Be the first to sign!</p>
+        </div>
+        <button id="clear-messages-btn" class="btn btn-danger hidden">Clear Messages</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> HelloWorld.io — Built with Vanilla HTML, CSS, and JS.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
